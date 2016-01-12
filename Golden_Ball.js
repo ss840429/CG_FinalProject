@@ -347,6 +347,13 @@ window.onload = function init()
         var index = document.getElementById( "cdes" ).selectedIndex ;
         gl.uniform4fv( gl.getUniformLocation(program, "destin"), RangeColor[index]) ;
     }
+    document.getElementById( "music_apply" ).onclick = function() {
+        var sel = document.getElementById('adminsong');
+        var text = "./music/" + sel.value;
+        document.getElementById("myAudio").src = text ;
+    }
+
+
 	// event handlers for mouse input (borrowed from "Learning WebGL" lesson 11)
 	canvas.onmousedown = handleMouseDown;
     document.onmouseup = handleMouseUp;
