@@ -100,8 +100,30 @@ void main()
 <script type="text/javascript" src="./Golden_Ball.js"></script>
 
 <style>
-	canvas {
-		position: absolute;
+	body {
+		text-align: center;
+	}
+
+	div {
+		display: inline-block;
+		color: #fff;
+		vertical-align: top;
+	}
+	.up, .down {
+		display: block;
+	}
+
+	.XYZ-btn {
+		width: 45%;
+	}
+
+	.song-list {
+		width: 45%;
+	}
+	footer {
+		width: 100%;
+		border-top: 1px solid #fff;
+		color: #fff;
 	}
 </style>
 
@@ -109,46 +131,38 @@ void main()
 
 <body style="background-color:black">
 
-<br>
-<button id="xButton">Rotate X</button>
-<button id="yButton">Rotate Y</button>
-<button id="zButton">Rotate Z</button>
-<button id="pButton" style="background-color:#00ff00">Pause</button>
-<button id="dButton" style="background-color:#6688cc">Depth Test</button>
+<div class="XYZ-btn">
+	<button id="xButton">Rotate X</button>
+	<button id="yButton">Rotate Y</button>
+	<button id="zButton">Rotate Z</button>
+	<button id="pButton" style="background-color:#00ff00">Pause</button>
+	<button id="dButton" style="background-color:#6688cc">Depth Test</button>
 
-<canvas id="gl-canvas" width="800" height="800" style="right:30vw ; top:15vh">
+	<audio id="myAudio" src="./music/Sleep_Away.mp3" controls=""></audio>
+</div>
+
+<div class="song-list">
+	<div class="up">
+	<label for="music_name" style="color:white">Music :
+		<select name="music_name" id="music">
+			<option value="Sleep_Away.mp3">Sleep Away</option>
+			<option value="Kalimba.mp3">Kalimba</option>
+			<option value="TK.mp3">TK</option>
+		</select>
+		<button id="music_apply" style="background-color:cyan">Apply</button>
+	</div>
+	<div class="down">
+		Direction :
+		<button id="enlarge" style="background-color:red">Enlarge</button>
+		<button id="narrow" style="background-color:green">Narrow</button>
+	</div>
+</div>
+
+<canvas id="gl-canvas" width="550" height="550">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
+<footer>
+	wlogsky &copy; 2015
+</footer>
+</body></html>
 
-<br><br>
-<audio id="myAudio" src="./music/Sleep_Away.mp3" controls=""></audio>
-<br><br>
-
-<label for="music_name" style="color:white">Music : 
-<select name="music_name" id="music">
-<option value="Sleep_Away.mp3">Sleep Away</option>
-<option value="Kalimba.mp3">Kalimba</option>
-<option value="TK.mp3">TK</option>
-<!-- <option value=""></option> -->
-</select>
-<button id="music_apply" style="background-color:cyan">Apply</button>
-<br><br>
-
-Direction :
-<button id="enlarge" style="background-color:red">Enlarge</button>
-<button id="narrow" style="background-color:green">Narrow</button>
-
-<br><br><br><br><br>
-
-<!--
-<label for="utube">YouTube</label> : <input id="utube" type="url" placeholder="Paste youtube link here">
-<button id="url_apply" style="background-color:cyan">Apply</button>
-<br><br>
- 
-<iframe id="ytplayer" type="text/html" width="720" height="405"
-src="https://www.youtube.com/embed/KK9bwTlAvgo" frameborder="0" >
-</iframe>  
-
--->                                                                                             
-
-</label></body></html>
