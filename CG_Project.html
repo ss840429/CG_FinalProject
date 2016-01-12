@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://www.csie.ntnu.edu.tw/~40247015S/CG_Project/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=Big5">
+
+<style type="text/css"></style><style type="text/css"></style><script id="vertex-shader" type="x-shader/x-vertex">
+precision mediump float;
+
+attribute vec4 vPosition;
+attribute vec4 vColor;
+attribute vec4 vNormal;
+attribute vec2 vTexCoord;
+
+varying vec4 fPosition;
+varying vec4 fColor;
+varying vec4 fNormal;
+varying vec2 fTexCoord;
+
+uniform mat4 modelingMatrix;
+uniform mat4 viewingMatrix;
+uniform mat4 projectionMatrix;
+uniform float volume;
+
+uniform float Neg;
+uniform float Shift;
+
+void main()
+{
+	vec4 vertex = vPosition;
+        vec4 N = normalize( modelingMatrix * vNormal );	// Normal vector
+
+	fPosition = modelingMatrix * vPosition;
+	fColor = vColor;
+	fNormal = N;
+	fTexCoord = vTexCoord;
+
+	// Scale the vertex with the audio volume 
+
+	vertex.x -= volume*Neg+Shift ;
+//	vertex.x += volume*1.0-5.0 ; 
+	
+        gl_Position = projectionMatrix * viewingMatrix * modelingMatrix * vertex ;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+// Note that the following are interpolated between vertices.
+varying vec4 fPosition;
+varying vec4 fColor;  
+varying vec4 fNormal;
+varying vec2 fTexCoord;
+
+uniform sampler2D texture;
+
+uniform mat4 modelingMatrix;
+uniform mat4 viewingMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 lightMatrix;
+uniform vec4 lightPosition;
+uniform vec4 materialAmbient;
+uniform vec4 materialDiffuse;
+uniform vec4 materialSpecular;
+uniform float shininess;
+uniform float volume1;
+
+void main()
+{
+	vec4 eye = vec4(0.0, 0.0, 2.0, 1.0);  // The default eye position
+    vec4 L = normalize( lightMatrix*lightPosition - fPosition ); // Light vector
+    vec4 N = fNormal;	// Normal vector
+	vec4 V = normalize( eye - fPosition );		// Eye vector.
+    vec4 H = normalize( L + V );  // Halfway vector in the modified Phong model
+
+	vec4 origin = vec4( 0.0 , 1.0 , 0.0 , 1.0 ) ;
+	vec4 destin = vec4( 1.0 , 0.0 , 0.0 , 1.0 ) ;
+
+	// Normal variation stored in the texture is within [0,1]. Convert it to [-1, 1]
+	vec4 texel = texture2D( texture, fTexCoord ) * 2.0 - 1.0;
+	N.xy += texel.xy;
+	N = normalize( N );
+	
+    // Compute terms in the illumination equation
+    vec4 ambient = materialAmbient;
+
+    float Kd = max( dot(L, N), 0.0 );
+    vec4  diffuse = Kd * materialDiffuse;
+
+	float Ks = pow( max(dot(N, H), 0.0), shininess );
+    vec4  specular = Ks * materialSpecular;
+
+    //gl_FragColor = (ambient + diffuse) * texture2D( texture, fTexCoord );// + specular;
+    gl_FragColor = (ambient + diffuse) * (origin+(destin-origin)/4.0*volume1) + specular;
+}
+</script>
+
+<script type="text/javascript" src="./WebGL_Lib/webgl-utils.js"></script>
+<script type="text/javascript" src="./WebGL_Lib/initShaders.js"></script>
+<script type="text/javascript" src="./WebGL_Lib/MV.js"></script>
+<script type="text/javascript" src="./Golden_Ball.js"></script>
+
+<style>
+	canvas {
+		position: absolute;
+	}
+</style>
+
+</head>
+
+<body style="background-color:black">
+
+<br>
+<button id="xButton">Rotate X</button>
+<button id="yButton">Rotate Y</button>
+<button id="zButton">Rotate Z</button>
+<button id="pButton" style="background-color:#00ff00">Pause</button>
+<button id="dButton" style="background-color:#6688cc">Depth Test</button>
+
+<canvas id="gl-canvas" width="800" height="800" style="right:30vw ; top:15vh">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+<br><br>
+<audio id="myAudio" src="./music/Sleep_Away.mp3" controls=""></audio>
+<br><br>
+
+<label for="music_name" style="color:white">Music : 
+<select name="music_name" id="music">
+<option value="Sleep_Away.mp3">Sleep Away</option>
+<option value="Kalimba.mp3">Kalimba</option>
+<option value="TK.mp3">TK</option>
+<!-- <option value=""></option> -->
+</select>
+<button id="music_apply" style="background-color:cyan">Apply</button>
+<br><br>
+
+Direction :
+<button id="enlarge" style="background-color:red">Enlarge</button>
+<button id="narrow" style="background-color:green">Narrow</button>
+
+<br><br><br><br><br>
+
+<!--
+<label for="utube">YouTube</label> : <input id="utube" type="url" placeholder="Paste youtube link here">
+<button id="url_apply" style="background-color:cyan">Apply</button>
+<br><br>
+ 
+<iframe id="ytplayer" type="text/html" width="720" height="405"
+src="https://www.youtube.com/embed/KK9bwTlAvgo" frameborder="0" >
+</iframe>  
+
+-->                                                                                             
+
+</label></body></html>
