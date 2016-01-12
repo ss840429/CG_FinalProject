@@ -15,6 +15,8 @@ var depthTest = 1;
 var eyePosition = [ 0, 0, 2 ];
 
 var last = 0 ;
+var RangeColor = [ vec4(1,0,0,1), vec4(0,1,0,1), vec4(0,0,1,1) ];
+
 
 // event handlers for mouse input (borrowed from "Learning WebGL" lesson 11)
 var mouseDown = false;
@@ -306,6 +308,8 @@ window.onload = function init()
     gl.uniform1f( gl.getUniformLocation(program, "Neg"), 1.0 );
     gl.uniform1f( gl.getUniformLocation(program, "Shift"), 0.0 );
     gl.uniform1i( gl.getUniformLocation(program, "rglswitch"), 0 );
+    gl.uniform4fv( gl.getUniformLocation(program, "origin"), RangeColor[1]) ;
+    gl.uniform4fv( gl.getUniformLocation(program, "destin"), RangeColor[0]) ;
 
     //event listeners for buttons 
     document.getElementById( "xButton" ).onclick = rotateX;
@@ -335,7 +339,14 @@ window.onload = function init()
         gl.uniform1i( gl.getUniformLocation(program, "rglswitch"), 1-last );
         last = 1-last ;
     }
-
+    document.getElementById( "cori" ).onchange = function() {
+        var index = document.getElementById( "cori" ).selectedIndex ;
+        gl.uniform4fv( gl.getUniformLocation(program, "origin"), RangeColor[index]) ;
+    }
+    document.getElementById( "cdes" ).onchange = function() {
+        var index = document.getElementById( "cdes" ).selectedIndex ;
+        gl.uniform4fv( gl.getUniformLocation(program, "destin"), RangeColor[index]) ;
+    }
 	// event handlers for mouse input (borrowed from "Learning WebGL" lesson 11)
 	canvas.onmousedown = handleMouseDown;
     document.onmouseup = handleMouseUp;
