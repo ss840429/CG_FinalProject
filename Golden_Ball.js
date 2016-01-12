@@ -14,6 +14,8 @@ var paused = 0;
 var depthTest = 1;
 var eyePosition = [ 0, 0, 2 ];
 
+var last = 0 ;
+
 // event handlers for mouse input (borrowed from "Learning WebGL" lesson 11)
 var mouseDown = false;
 var lastMouseX = null;
@@ -303,6 +305,7 @@ window.onload = function init()
 
     gl.uniform1f( gl.getUniformLocation(program, "Neg"), 1.0 );
     gl.uniform1f( gl.getUniformLocation(program, "Shift"), 0.0 );
+    gl.uniform1i( gl.getUniformLocation(program, "rglswitch"), 0 );
 
     //event listeners for buttons 
     document.getElementById( "xButton" ).onclick = rotateX;
@@ -327,6 +330,10 @@ window.onload = function init()
     document.getElementById( "narrow" ).onclick = function() {
         gl.uniform1f( gl.getUniformLocation(program, "Neg"), -1.0 );
         gl.uniform1f( gl.getUniformLocation(program, "Shift"), 5.0 );
+    }
+    document.getElementById( "rglsw" ).onclick = function() {
+        gl.uniform1i( gl.getUniformLocation(program, "rglswitch"), 1-last );
+        last = 1-last ;
     }
 
 	// event handlers for mouse input (borrowed from "Learning WebGL" lesson 11)

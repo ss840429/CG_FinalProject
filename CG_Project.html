@@ -63,6 +63,7 @@ uniform vec4 materialDiffuse;
 uniform vec4 materialSpecular;
 uniform float shininess;
 uniform float volume1;
+uniform int rglswitch ;
 
 void main()
 {
@@ -95,6 +96,7 @@ void main()
     if( volume1 <= 1.0 ) ColorMix = origin+(middle-origin)*volume1 ;
     else ColorMix = middle+(destin-middle)/4.0*volume1 ;
 
+    if( rglswitch == 0 ) ColorMix = origin+(destin-origin)/4.0*volume1 ;
 
 	//gl_FragColor = (ambient + diffuse) * texture2D( texture, fTexCoord );// + specular;
     gl_FragColor = (ambient + diffuse) * ColorMix + specular;
@@ -146,6 +148,13 @@ Oops ... your browser doesn't support the HTML5 canvas element
 Direction :
 <button id="enlarge" style="background-color:red">Enlarge</button>
 <button id="narrow" style="background-color:green">Narrow</button>
+
+<br><br>
+
+Red-Green light : 
+<button id="rglsw" style="background-color:#00ff00">Switch</button>
+
+
 
 <br><br><br><br><br>
 
