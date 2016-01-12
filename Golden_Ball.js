@@ -280,7 +280,7 @@ window.onload = function init()
     image.onload = function() { 
         configureTexture( image );
     }
-    image.src = "./bump.jpg";
+//    image.src = "./bump.jpg";
 
 	// uniform variables in shaders
     modelingLoc   = gl.getUniformLocation(program, "modelingMatrix"); 
