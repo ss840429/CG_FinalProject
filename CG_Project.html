@@ -101,7 +101,15 @@ void main()
 
 <style>
 	body {
+		margin: 0;
+		padding: 0;
 		text-align: center;
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+	main {
+		flex: 1;
 	}
 
 	div {
@@ -115,10 +123,12 @@ void main()
 
 	.XYZ-btn {
 		width: 45%;
+		padding: .5rem;
 	}
 
 	.song-list {
 		width: 45%;
+		padding: .5rem;
 	}
 	footer {
 		width: 100%;
@@ -130,7 +140,7 @@ void main()
 </head>
 
 <body style="background-color:black">
-
+<main>
 <div class="XYZ-btn">
 	<button id="xButton">Rotate X</button>
 	<button id="yButton">Rotate Y</button>
@@ -161,6 +171,7 @@ void main()
 <canvas id="gl-canvas" width="550" height="550">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
+</main>
 <footer>
 	wlogsky &copy; 2015
 </footer>
