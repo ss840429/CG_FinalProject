@@ -312,7 +312,7 @@ window.onload = function init()
     document.getElementById( "dButton" ).onclick = function() {depthTest=!depthTest;};
     document.getElementById( "music_apply" ).onclick = function() {
 	var sel = document.getElementById('music');
-	var text = sel.options[sel.selectedIndex].value;
+	var text = "./music/" + sel.options[sel.selectedIndex].value;
 	document.getElementById("myAudio").src = text ;
     }
 //    document.getElementById( "url_apply" ).onclick = function() {
