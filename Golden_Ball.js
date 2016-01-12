@@ -310,7 +310,7 @@ window.onload = function init()
     document.getElementById( "zButton" ).onclick = rotateZ;
     document.getElementById( "pButton" ).onclick = function() {paused=!paused;};
     document.getElementById( "dButton" ).onclick = function() {depthTest=!depthTest;};
-    document.getElementById( "music_apply" ).onclick = function() {
+    document.getElementById( "music" ).onchange = function() {
 	var sel = document.getElementById('music');
 	var text = "./music/" + sel.options[sel.selectedIndex].value;
 	document.getElementById("myAudio").src = text ;
